@@ -5,10 +5,13 @@ import java.io.File
 
 class FileHandler {
     private lateinit var file: File
+    private lateinit var resultFile: File
 
-    fun initialize(applicationContext: Context, filename: String) {
+    fun initialize(applicationContext: Context, filename: String, resultFilename: String) {
         file = File(applicationContext.filesDir, filename)
+        resultFile = File(applicationContext.filesDir, resultFilename)
         file.createNewFile()
+        resultFile.createNewFile()
     }
 
     fun appendTextToFile(text: String) {
@@ -29,5 +32,9 @@ class FileHandler {
         val list = mutableListOf<String>()
         file.forEachLine { list.add(it) }
         return list
+    }
+
+    fun saveResult(result: String) {
+        
     }
 }
