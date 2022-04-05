@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">GroupApp</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="start_fragment_label">Start Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Return</string>
+    <string name="add">Add</string>
+    <string name="remove">Remove</string>
+    <string name="start">Get started</string>
+
+    <string name="listnames">List of names</string>
+</resources>

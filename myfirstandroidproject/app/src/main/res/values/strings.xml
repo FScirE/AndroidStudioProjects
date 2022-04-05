@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Funny Number</string>
+    <string name="firstText">0</string>
+    <string name="countButtonText">Count</string>
+    <string name="randomButtonText">Random</string>
+    <string name="toastButtonText">Toast</string>
+    <string name="randomTextView">Random number between 0–1000</string>
+    <string name="returnButtonText">Return</string>
+</resources>
