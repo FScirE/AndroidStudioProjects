@@ -32,9 +32,13 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //initialize files and personhandler
+        Holder.Value.ph.fh.initialize(requireContext().applicationContext, "people.txt", "result.txt")
+        Holder.Value.ph.initialize()
+
+        binding.introText.text = Holder.Value.ph.fh.getResultFromFile()
+
         binding.buttonFirst.setOnClickListener {
-            Holder.Value.ph.fh.initialize(requireContext().applicationContext, "people.txt")
-            Holder.Value.ph.initialize()
             findNavController().navigate(R.id.action_startFragment_to_FirstFragment)
         }
     }

@@ -35,6 +35,14 @@ class FileHandler {
     }
 
     fun saveResult(result: String) {
-        
+        resultFile.writeText("")
+        val lines = result.split("\n")
+        for (l in lines) resultFile.appendText(l + "\n")
+    }
+
+    fun getResultFromFile(): String {
+        var string = ""
+        resultFile.forEachLine { string += it + "\n" }
+        return string
     }
 }

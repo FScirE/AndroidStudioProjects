@@ -35,6 +35,7 @@ class SecondFragment : Fragment() {
 
         val ph = Holder.Value.ph
         binding.listGroups.text = ph.namesAsRandomGroups(Holder.Value.gr)
+        Holder.Value.ph.fh.saveResult(binding.listGroups.text.toString())
 
         binding.buttonSecond.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
