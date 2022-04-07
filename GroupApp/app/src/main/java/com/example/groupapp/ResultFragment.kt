@@ -7,14 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
-import com.example.groupapp.databinding.FragmentFirstBinding
+import com.example.groupapp.databinding.FragmentResultBinding
 import com.example.groupapp.databinding.FragmentStartBinding
 
-/**
- * A simple [Fragment] subclass.
- */
-class StartFragment : Fragment() {
-    private var _binding: FragmentStartBinding? = null
+class ResultFragment : Fragment() {
+    private var _binding: FragmentResultBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,23 +22,17 @@ class StartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentStartBinding.inflate(inflater, container, false)
+        _binding = FragmentResultBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //initialize files and personhandler
-        Holder.Value.ph.fh.initialize(requireContext().applicationContext, "people.txt", "result.txt")
-        Holder.Value.ph.initialize()
+        binding.listGroups.text = Holder.Value.ph.fh.getResultFromFile()
 
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_startFragment_to_FirstFragment)
-        }
-
-        binding.lastResult.setOnClickListener {
-            findNavController().navigate(R.id.action_StartFragment_to_resultFragment)
+        binding.returnButton.setOnClickListener {
+            findNavController().navigate(R.id.action_resultFragment_to_StartFragment)
         }
     }
 

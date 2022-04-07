@@ -10,7 +10,10 @@
     <string name="add">Add</string>
     <string name="remove">Remove</string>
     <string name="start">Get started</string>
+    <string name="result_button">Last result</string>
 
     <string name="listnames">List of names</string>
     <string name="introtext">Create a list of people and\ndivide them into groups with ease!</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
