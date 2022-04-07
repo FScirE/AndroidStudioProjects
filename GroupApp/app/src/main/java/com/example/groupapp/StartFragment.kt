@@ -36,8 +36,6 @@ class StartFragment : Fragment() {
         Holder.Value.ph.fh.initialize(requireContext().applicationContext, "people.txt", "result.txt")
         Holder.Value.ph.initialize()
 
-        binding.introText.text = Holder.Value.ph.fh.getResultFromFile()
-
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_startFragment_to_FirstFragment)
         }
