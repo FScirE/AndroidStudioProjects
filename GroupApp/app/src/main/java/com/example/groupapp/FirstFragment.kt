@@ -1,5 +1,6 @@
 package com.example.groupapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.groupapp.databinding.FragmentFirstBinding
-import org.w3c.dom.Text
+
 
 val ph = Holder.Value.ph
 /**
@@ -106,5 +107,11 @@ class FirstFragment : Fragment() {
 
         binding.numGroups.setText(Holder.Value.gr.toString(), TextView.BufferType.EDITABLE)
         refreshPpg(binding.numGroups.text.toString())
+    }
+
+    //--------------
+
+    public fun backToStart() {
+        findNavController().navigate(R.id.action_FirstFragment_to_startFragment)
     }
 }

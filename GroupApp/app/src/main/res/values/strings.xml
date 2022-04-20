@@ -13,7 +13,7 @@
     <string name="result_button">Last result</string>
 
     <string name="listnames">List of names</string>
-    <string name="introtext">Create a list of people and\ndivide them into groups with ease!</string>
+    <string name="introtext">Create a list of people and divide\nthem into random groups with ease!</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
