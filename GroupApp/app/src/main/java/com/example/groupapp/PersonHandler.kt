@@ -1,10 +1,5 @@
 package com.example.groupapp
 
-import android.content.Context
-import android.widget.TextView
-import android.widget.Toast
-import com.example.groupapp.databinding.FragmentFirstBinding
-import java.io.File
 import kotlin.math.roundToInt
 import kotlin.random.Random
 

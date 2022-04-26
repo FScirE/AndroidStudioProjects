@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.groupapp.databinding.FragmentResultBinding
-import com.example.groupapp.databinding.FragmentStartBinding
 
 class ResultFragment : Fragment() {
     private var _binding: FragmentResultBinding? = null

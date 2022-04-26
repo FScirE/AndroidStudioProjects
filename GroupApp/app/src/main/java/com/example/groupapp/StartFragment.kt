@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
-import com.example.groupapp.databinding.FragmentFirstBinding
 import com.example.groupapp.databinding.FragmentStartBinding
 
 /**

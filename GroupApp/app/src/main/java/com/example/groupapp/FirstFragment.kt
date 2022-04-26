@@ -1,6 +1,5 @@
 package com.example.groupapp
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -111,7 +110,7 @@ class FirstFragment : Fragment() {
 
     //--------------
 
-    public fun backToStart() {
+    fun backToStart() {
         findNavController().navigate(R.id.action_FirstFragment_to_startFragment)
     }
 }
