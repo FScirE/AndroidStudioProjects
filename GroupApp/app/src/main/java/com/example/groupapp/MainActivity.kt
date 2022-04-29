@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         if (fragment is FirstFragment) {
             fragment.backToStart()
         }
-        else {
+        else if (fragment !is StartFragment) {
             super.onBackPressed()
         }
     }
