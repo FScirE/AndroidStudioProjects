@@ -1,12 +1,15 @@
 package com.example.musicapp
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.example.musicapp.databinding.FragmentFirstBinding
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -33,12 +36,18 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            openFileBrowser()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun openFileBrowser() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.setType("audio/*")
+        startActivity(Intent.createChooser(intent, "Select file"))
     }
 }
