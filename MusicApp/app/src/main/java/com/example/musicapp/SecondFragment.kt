@@ -28,7 +28,17 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mediaPlayer = MediaPlayer()
+        mediaPlayer.setDataSource(context?.applicationContext!!, FileHandler.currentUri)
+        mediaPlayer.prepare()
 
+        val totalSeconds = mediaPlayer.duration.toString().toFloat() / 1000
+        val hours = (totalSeconds / 3600).toInt()
+        val minutes = ((totalSeconds % 3600) / 60).toInt()
+        val seconds = (totalSeconds % 60).toInt()
+
+        if (totalSeconds >= 3600) binding.trackLength.text = String.format("%02d:%02d:%02d", hours, minutes, seconds)
+        else binding.trackLength.text = String.format("%02d:%02d", minutes, seconds)
     }
 
     override fun onDestroyView() {

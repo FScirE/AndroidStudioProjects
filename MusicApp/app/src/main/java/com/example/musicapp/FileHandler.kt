@@ -10,9 +10,5 @@ import java.io.File
 abstract class FileHandler {
     companion object {
         var currentUri = Uri.EMPTY
-
-        fun getSetUri(file: File) {
-            currentUri = Uri.fromFile(file)
-        }
     }
 }

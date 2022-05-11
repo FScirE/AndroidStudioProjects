@@ -37,13 +37,14 @@
                     android:layout_height="72dp"
                     android:background="@drawable/circle"
                     android:backgroundTint="@color/purple_200"
-                    android:contentDescription="Play"
+                    android:contentDescription="PlayPause"
                     android:src="@android:drawable/ic_media_play"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:ignore="ImageContrastCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
@@ -60,16 +61,17 @@
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/trackProgressTime"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center|center_vertical"
-                android:text="7:56"
-                android:textAlignment="center" />
+                android:text="@string/default_timer"
+                android:textAlignment="center"
+                tools:ignore="TextContrastCheck" />
 
             <SeekBar
-                android:id="@+id/seekbar"
+                android:id="@+id/seekBar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -77,13 +79,14 @@
                 android:thumbTintMode="src_atop" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/trackLength"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center|center_vertical"
-                android:text="12:00"
-                android:textAlignment="center" />
+                android:text="@string/default_timer"
+                android:textAlignment="center"
+                tools:ignore="TextContrastCheck" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
