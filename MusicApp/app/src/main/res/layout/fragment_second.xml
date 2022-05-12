@@ -96,11 +96,69 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#EFEFEF"
-        android:padding="8dp"
+        android:padding="10dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/bottomBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="#DDDDDD"
+        android:contentDescription="Song Image"
+        android:src="@android:drawable/ic_menu_report_image"
+        app:layout_constraintBottom_toTopOf="@+id/songName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        tools:ignore="ImageContrastCheck" />
+
+    <LinearLayout
+        android:id="@+id/seekLayout2"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/songName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.5">
+
+        <TextView
+            android:id="@+id/lowSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center|center_vertical"
+            android:text="@string/low_speed"
+            android:textAlignment="center"
+            tools:ignore="TextContrastCheck" />
+
+        <SeekBar
+            android:id="@+id/speedSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:max="100"
+            android:thumbTint="@color/purple_200"
+            android:thumbTintMode="src_atop" />
+
+        <TextView
+            android:id="@+id/highSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center|center_vertical"
+            android:text="@string/high_speed"
+            android:textAlignment="center"
+            tools:ignore="TextContrastCheck" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

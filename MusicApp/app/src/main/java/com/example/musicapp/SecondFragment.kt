@@ -2,20 +2,23 @@ package com.example.musicapp
 
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
+import android.media.PlaybackParams
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.musicapp.databinding.FragmentSecondBinding
 import java.io.File
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.logging.Logger
 
 class SecondFragment : Fragment() {
-    lateinit var mediaPlayer: MediaPlayer
-    lateinit var metaRetriever: MediaMetadataRetriever
-    lateinit var thread: Thread
+    private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var metaRetriever: MediaMetadataRetriever
+    private lateinit var seekBar: SeekBar
 
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
@@ -30,8 +33,6 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        thread = Thread(progressUpdater)
-        thread.start()
 
         metaRetriever = MediaMetadataRetriever()
         metaRetriever.setDataSource(context?.applicationContext!!, FileHandler.currentUri)
@@ -40,18 +41,22 @@ class SecondFragment : Fragment() {
         mediaPlayer.setDataSource(context?.applicationContext!!, FileHandler.currentUri)
         mediaPlayer.prepare()
 
+        //Mediaplayer attributes
         mediaPlayer.setVolume(1f, 1f)
 
-        val totalSeconds = mediaPlayer.duration.toString().toInt() / 1000
-        binding.trackLength.text = formattedTime(totalSeconds)
+        setPlaybackSpeed(1f)
+
+        binding.trackLength.text = formattedTime(mediaPlayer.duration / 1000)
 
         setTitle()
 
-        createProgressParentThread()
+        seekBar = binding.seekBar
+        seekBar.max = mediaPlayer.duration
+        progressThread.start()
 
         binding.playPauseButton.setOnClickListener {
             val button = binding.playPauseButton
-            if (mediaPlayer.isPlaying()) {
+            if (mediaPlayer.isPlaying) {
                 button.setImageDrawable(ResourcesCompat.getDrawable(resources ,android.R.drawable.ic_media_play, null))
                 mediaPlayer.pause()
             } else {
@@ -61,10 +66,10 @@ class SecondFragment : Fragment() {
         }
 
         mediaPlayer.setOnCompletionListener {
-
+            mediaPlayer.prepare()
         }
 
-
+        binding.speedSeekBar.setOnSeekBarChangeListener(binding)
     }
 
     override fun onDestroyView() {
@@ -87,24 +92,27 @@ class SecondFragment : Fragment() {
         binding.songName.text = title
     }
 
-    var progressUpdater: Runnable? = null
-    private fun createProgressParentThread() {
-        progressUpdater = Runnable {
-            while (mediaPlayer.isPlaying()) {
-                try {
-                    var current = 0
-                    val total: Int = mediaPlayer.getDuration()
-                    binding.seekBar.max = total
-                    while (current < total) {
-                        try {
-                            Thread.sleep(1000) //Update once per second
-                            current = mediaPlayer.getCurrentPosition()
-                            binding.seekBar.progress = current
-                        } catch (e: InterruptedException) { }
-                        catch (e: Exception) { }
-                    }
-                } catch (e: Exception) { }
+    private fun setPlaybackSpeed(speed: Float) {
+        val playbackParams = PlaybackParams()
+        playbackParams.speed = speed
+        mediaPlayer.playbackParams = playbackParams
+    }
+
+    private val progressThread = Thread {
+        while (true) {
+            if (mediaPlayer.isPlaying) {
+                seekBar.progress = mediaPlayer.currentPosition
+                binding.trackProgressTime.text = formattedTime(mediaPlayer.currentPosition / 1000)
+                Thread.sleep(200)
             }
         }
+    }
+
+    private fun SeekBar.setOnSeekBarChangeListener(binding: FragmentSecondBinding) {
+        val lowSpeed = getString(R.string.low_speed).substring(0, getString(R.string.low_speed).length - 1).toFloat()
+        val highSpeed = getString(R.string.high_speed).substring(0, getString(R.string.high_speed).length - 1).toFloat()
+        val barProgress = binding.seekBar.progress.toFloat()
+        val newSpeed = (highSpeed - lowSpeed) * (barProgress / 100)
+        setPlaybackSpeed(newSpeed)
     }
 }
