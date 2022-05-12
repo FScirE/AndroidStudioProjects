@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat.startActivity
 import java.io.File
+import java.net.URI
 
 abstract class FileHandler {
     companion object {
