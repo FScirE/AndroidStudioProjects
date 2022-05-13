@@ -1,27 +1,34 @@
 package com.example.musicapp
 
+import android.content.Context
+import android.database.Cursor
 import android.graphics.BitmapFactory
-import android.media.Image
+import android.graphics.Color
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.PlaybackParams
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
 import com.example.musicapp.databinding.FragmentSecondBinding
 import java.io.File
+import java.net.URISyntaxException
 
 
 class SecondFragment : Fragment() {
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var metaRetriever: MediaMetadataRetriever
     private lateinit var seekBar: SeekBar
+    private var threadRunning = true
 
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
@@ -64,6 +71,14 @@ class SecondFragment : Fragment() {
             }
         }
 
+        binding.repeatButton.setOnClickListener {
+            if (mediaPlayer.isLooping) {
+                repeatOff()
+            } else {
+                repeatOn()
+            }
+        }
+
         mediaPlayer.setOnCompletionListener {
             mediaPlayer.prepare()
         }
@@ -88,6 +103,12 @@ class SecondFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+        threadRunning = false
+        progressThread.join()
+
+        mediaPlayer.stop()
+        mediaPlayer.release()
         _binding = null
     }
 
@@ -106,21 +127,33 @@ class SecondFragment : Fragment() {
         binding.songName.text = title
     }
     private fun setImage() {
-        val art: ByteArray? = metaRetriever.embeddedPicture
-        if (art == null) binding.songImage.setImageDrawable(ResourcesCompat.getDrawable(resources ,android.R.drawable.ic_menu_report_image, null))
-        binding.songImage.setImageBitmap(BitmapFactory.decodeByteArray(art, 0, art!!.size))
+        var art: ByteArray? = null
+        try {
+            art = metaRetriever.embeddedPicture
+        } catch(e: Exception) { }
+        if (art == null) binding.songImage.setImageDrawable(ResourcesCompat.getDrawable(resources, android.R.drawable.ic_menu_report_image, null))
+        else binding.songImage.setImageBitmap(BitmapFactory.decodeByteArray(art, 0, art.size))
     }
 
     private fun setPlaybackSpeed(speed: Float) {
-        pauseMediaPlayer()
-        val playbackParams = PlaybackParams()
-        playbackParams.speed = speed
-        mediaPlayer.playbackParams = playbackParams
-        startMediaPlayer()
+        if (mediaPlayer.isPlaying) {
+            val playbackParams = PlaybackParams()
+            playbackParams.speed = speed
+            mediaPlayer.playbackParams = playbackParams
+            binding.currentSpeed.text = (speed * 100).toInt().toString() + "%"
+        } else {
+            mediaPlayer.setVolume(0f, 0f)
+            val playbackParams = PlaybackParams()
+            playbackParams.speed = speed
+            mediaPlayer.playbackParams = playbackParams
+            binding.currentSpeed.text = (speed * 100).toInt().toString() + "%"
+            pauseMediaPlayer()
+            mediaPlayer.setVolume(1f, 1f)
+        }
     }
 
     private val progressThread = Thread {
-        while (true) {
+        while (threadRunning) {
             if (mediaPlayer.isPlaying) {
                 seekBar.progress = mediaPlayer.currentPosition
                 binding.trackProgressTime.text = formattedTime(mediaPlayer.currentPosition / 1000)
@@ -133,9 +166,21 @@ class SecondFragment : Fragment() {
         binding.playPauseButton.setImageDrawable(ResourcesCompat.getDrawable(resources ,android.R.drawable.ic_media_play, null))
         mediaPlayer.pause()
     }
-
     private fun startMediaPlayer() {
         binding.playPauseButton.setImageDrawable(ResourcesCompat.getDrawable(resources ,android.R.drawable.ic_media_pause, null))
         mediaPlayer.start()
+    }
+
+    private fun repeatOn() {
+        binding.repeatButton.background.colorFilter =
+            BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                ContextCompat.getColor(context?.applicationContext!!, R.color.purple_200), BlendModeCompat.SRC_ATOP)
+        mediaPlayer.isLooping = true
+    }
+    private fun repeatOff() {
+        binding.repeatButton.background.colorFilter =
+            BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                Color.parseColor("#BBBBBB"), BlendModeCompat.SRC_ATOP)
+        mediaPlayer.isLooping = false
     }
 }
