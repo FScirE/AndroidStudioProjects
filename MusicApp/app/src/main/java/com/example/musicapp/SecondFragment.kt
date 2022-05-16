@@ -1,14 +1,13 @@
 package com.example.musicapp
 
-import android.content.Context
 import android.database.Cursor
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.PlaybackParams
-import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +19,6 @@ import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
 import com.example.musicapp.databinding.FragmentSecondBinding
-import java.io.File
-import java.net.URISyntaxException
 
 
 class SecondFragment : Fragment() {
@@ -52,7 +49,7 @@ class SecondFragment : Fragment() {
         mediaPlayer.prepare()
 
         //Mediaplayer attributes
-        mediaPlayer.setVolume(1f, 1f)
+        mediaPlayer.setVolume(0.5f, 0.5f)
 
         binding.trackLength.text = formattedTime(mediaPlayer.duration / 1000)
 
@@ -94,7 +91,6 @@ class SecondFragment : Fragment() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 //Something
             }
-
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 //Something
             }
@@ -123,7 +119,7 @@ class SecondFragment : Fragment() {
 
     private fun setTitle() {
         var title: String? = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-        if (title == null) title = File(FileHandler.currentUri.path!!).name
+        if (title == null) title = FileHandler.getFileName(context?.applicationContext!!)
         binding.songName.text = title
     }
     private fun setImage() {
@@ -148,7 +144,7 @@ class SecondFragment : Fragment() {
             mediaPlayer.playbackParams = playbackParams
             binding.currentSpeed.text = (speed * 100).toInt().toString() + "%"
             pauseMediaPlayer()
-            mediaPlayer.setVolume(1f, 1f)
+            mediaPlayer.setVolume(0.5f, 0.5f)
         }
     }
 
