@@ -1,13 +1,12 @@
 package com.example.musicapp
 
-import android.database.Cursor
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.PlaybackParams
 import android.os.Bundle
-import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +18,7 @@ import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
 import com.example.musicapp.databinding.FragmentSecondBinding
+import kotlin.concurrent.thread
 
 
 class SecondFragment : Fragment() {
@@ -26,6 +26,7 @@ class SecondFragment : Fragment() {
     private lateinit var metaRetriever: MediaMetadataRetriever
     private lateinit var seekBar: SeekBar
     private var threadRunning = true
+    private var previousPlayState = false
 
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
@@ -77,6 +78,10 @@ class SecondFragment : Fragment() {
         }
 
         mediaPlayer.setOnCompletionListener {
+            stopMediaPlayer()
+            //Update seekbar pos to end of file
+            seekBar.progress = mediaPlayer.currentPosition
+            binding.trackProgressTime.text = formattedTime(mediaPlayer.currentPosition / 1000)
             mediaPlayer.prepare()
         }
 
@@ -93,6 +98,23 @@ class SecondFragment : Fragment() {
             }
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 //Something
+            }
+        })
+
+        seekBar.setOnSeekBarChangeListener(object: OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                //Something
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                previousPlayState = mediaPlayer.isPlaying
+                stopMediaPlayer()
+                mediaPlayer.prepare()
+            }
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                mediaPlayer.seekTo(seekBar.progress)
+                binding.trackProgressTime.text = formattedTime(mediaPlayer.currentPosition / 1000)
+                if (previousPlayState) startMediaPlayer()
             }
         })
     }
@@ -165,6 +187,10 @@ class SecondFragment : Fragment() {
     private fun startMediaPlayer() {
         binding.playPauseButton.setImageDrawable(ResourcesCompat.getDrawable(resources ,android.R.drawable.ic_media_pause, null))
         mediaPlayer.start()
+    }
+    private fun stopMediaPlayer() {
+        binding.playPauseButton.setImageDrawable(ResourcesCompat.getDrawable(resources ,android.R.drawable.ic_media_play, null))
+        mediaPlayer.stop()
     }
 
     private fun repeatOn() {

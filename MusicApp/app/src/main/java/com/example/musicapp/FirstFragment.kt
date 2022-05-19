@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -21,8 +22,12 @@ import com.example.musicapp.databinding.FragmentFirstBinding
  */
 class FirstFragment : Fragment() {
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        FileHandler.currentUri = uri
-        findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        if (uri != null) {
+            FileHandler.currentUri = uri
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        } else {
+            Toast.makeText(context, "No file selected", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private var _binding: FragmentFirstBinding? = null
