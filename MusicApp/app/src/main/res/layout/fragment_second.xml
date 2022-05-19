@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorOnPrimary"
     tools:context=".SecondFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#DDDDDD"
+        android:background="?attr/colorOnSecondaryContainer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +38,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@drawable/circle"
-                    android:backgroundTint="#BBBBBB"
+                    android:backgroundTint="?attr/colorAccent"
                     android:contentDescription="Repeat"
                     android:src="@android:drawable/stat_notify_sync_noanim"
                     app:layout_constraintBottom_toBottomOf="@+id/playPauseButton"
@@ -50,7 +51,7 @@
                     android:layout_width="86dp"
                     android:layout_height="86dp"
                     android:background="@drawable/circle"
-                    android:backgroundTint="@color/purple_200"
+                    android:backgroundTint="?attr/colorSecondary"
                     android:contentDescription="PlayPause"
                     android:src="@android:drawable/ic_media_play"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -65,7 +66,7 @@
         <LinearLayout
             android:id="@+id/seekLayout"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -89,7 +90,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:thumbTint="@color/purple_200"
+                android:progress="12"
+                android:progressTint="?attr/colorSecondaryVariant"
+                android:thumbTint="?attr/colorSecondary"
                 android:thumbTintMode="src_atop" />
 
             <TextView
@@ -109,7 +112,7 @@
         android:id="@+id/songName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#EFEFEF"
+        android:background="?attr/colorOnPrimaryContainer"
         android:padding="10dp"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/bottomBar"
@@ -122,7 +125,7 @@
         android:id="@+id/songImage"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:background="#DDDDDD"
+        android:background="?attr/colorOnSecondaryContainer"
         android:contentDescription="Song Image"
         android:src="@android:drawable/ic_menu_report_image"
         app:layout_constraintBottom_toTopOf="@+id/songName"
@@ -161,7 +164,8 @@
             android:layout_weight="1"
             android:max="100"
             android:progress="50"
-            android:thumbTint="@color/purple_200"
+            android:progressTint="?attr/colorSecondaryVariant"
+            android:thumbTint="?attr/colorSecondary"
             android:thumbTintMode="src_atop" />
 
         <TextView

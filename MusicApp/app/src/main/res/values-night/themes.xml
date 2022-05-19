@@ -2,15 +2,21 @@
     <!-- Base application theme. -->
     <style name="Theme.MusicApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/blue_700</item>
+        <item name="colorPrimaryVariant">@color/blue_900</item>
+        <item name="colorOnPrimary">@color/darkestgray</item>
+        <item name="colorOnPrimaryContainer">#555555</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/blue_500</item>
+        <item name="colorSecondaryVariant">@color/blue_700</item>
+        <item name="colorOnSecondary">@color/lightgray</item>
+        <item name="colorOnSecondaryContainer">@color/darkergray</item>
+        <item name="colorAccent">#808080</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+        <item name="android:colorActivatedHighlight">?attr/colorSecondary</item>
+        <item name="android:colorAccent">?attr/colorAccent</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

@@ -1,24 +1,25 @@
 package com.example.musicapp
 
+import android.content.Context
+import android.content.res.Resources
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.PlaybackParams
 import android.os.Bundle
-import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import androidx.core.content.ContextCompat
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
 import com.example.musicapp.databinding.FragmentSecondBinding
-import kotlin.concurrent.thread
 
 
 class SecondFragment : Fragment() {
@@ -194,15 +195,20 @@ class SecondFragment : Fragment() {
     }
 
     private fun repeatOn() {
-        binding.repeatButton.background.colorFilter =
-            BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                ContextCompat.getColor(context?.applicationContext!!, R.color.purple_200), BlendModeCompat.SRC_ATOP)
+        binding.repeatButton.background.setTint(context?.getColorFromAttr(android.R.attr.colorActivatedHighlight)!!)
         mediaPlayer.isLooping = true
     }
     private fun repeatOff() {
-        binding.repeatButton.background.colorFilter =
-            BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                Color.parseColor("#BBBBBB"), BlendModeCompat.SRC_ATOP)
+        binding.repeatButton.background.setTint(context?.getColorFromAttr(android.R.attr.colorAccent)!!)
         mediaPlayer.isLooping = false
+    }
+
+    fun Context.getColorFromAttr(
+        @AttrRes attrColor: Int,
+        typedValue: TypedValue = TypedValue(),
+        resolveRefs: Boolean = true
+    ): Int {
+        theme.resolveAttribute(attrColor, typedValue, resolveRefs)
+        return typedValue.data
     }
 }
