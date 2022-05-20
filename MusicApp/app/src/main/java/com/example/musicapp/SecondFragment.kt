@@ -82,7 +82,6 @@ class SecondFragment : Fragment() {
             stopMediaPlayer()
             //Update seekbar pos to end of file
             seekBar.progress = mediaPlayer.currentPosition
-            binding.trackProgressTime.text = formattedTime(mediaPlayer.currentPosition / 1000)
             mediaPlayer.prepare()
         }
 
@@ -104,7 +103,7 @@ class SecondFragment : Fragment() {
 
         seekBar.setOnSeekBarChangeListener(object: OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                //Something
+                binding.trackProgressTime.text = formattedTime(progress / 1000)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -114,7 +113,6 @@ class SecondFragment : Fragment() {
             }
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 mediaPlayer.seekTo(seekBar.progress)
-                binding.trackProgressTime.text = formattedTime(mediaPlayer.currentPosition / 1000)
                 if (previousPlayState) startMediaPlayer()
             }
         })
@@ -175,7 +173,6 @@ class SecondFragment : Fragment() {
         while (threadRunning) {
             if (mediaPlayer.isPlaying) {
                 seekBar.progress = mediaPlayer.currentPosition
-                binding.trackProgressTime.text = formattedTime(mediaPlayer.currentPosition / 1000)
                 Thread.sleep(200)
             }
         }
